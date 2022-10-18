@@ -319,7 +319,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258484517}
-  m_LocalRotation: {x: 0.014956421, y: -0.0000000010752784, z: 1.6084115e-11, w: 0.9998882}
+  m_LocalRotation: {x: 0.014956421, y: 0.0000000010752784, z: -1.6084115e-11, w: 0.9998882}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -397,7 +397,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307191461}
-  m_LocalRotation: {x: 0.06840105, y: -0, z: -0, w: 0.9976579}
+  m_LocalRotation: {x: 0.06840105, y: 1e-45, z: -0, w: 0.9976579}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -639,7 +639,7 @@ GameObject:
   - component: {fileID: 787371821}
   - component: {fileID: 787371820}
   - component: {fileID: 787371819}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -782,10 +782,10 @@ MonoBehaviour:
   m_YAxis:
     Value: 0.5
     m_SpeedMode: 0
-    m_MaxSpeed: 10
+    m_MaxSpeed: 20
     m_AccelTime: 0.2
     m_DecelTime: 0.1
-    m_InputAxisName: Mouse Y
+    m_InputAxisName: CameraControllerY
     m_InputAxisValue: 0
     m_InvertInput: 0
     m_MinValue: 0
@@ -806,10 +806,10 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 300
+    m_MaxSpeed: 1000
     m_AccelTime: 0.1
     m_DecelTime: 0.1
-    m_InputAxisName: Mouse X
+    m_InputAxisName: CameraControllerX
     m_InputAxisValue: 0
     m_InvertInput: 1
     m_MinValue: -180
@@ -1220,6 +1220,7 @@ GameObject:
   - component: {fileID: 1071740355}
   - component: {fileID: 1071740354}
   - component: {fileID: 1071740353}
+  - component: {fileID: 1071740359}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1241,6 +1242,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _walkSpeed: 10
   _rotateSpeed: 600
+  _jumpPower: 20
+  _gravity: 3
 --- !u!54 &1071740354
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1337,6 +1340,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1071740359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071740352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b483b017d46fb6b4cb0a26686616399a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1964706288
 GameObject:
   m_ObjectHideFlags: 3
@@ -1406,7 +1424,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964706288}
-  m_LocalRotation: {x: 0.11090733, y: -0.0000000037988097, z: 4.2393125e-10, w: 0.99383074}
+  m_LocalRotation: {x: 0.11090733, y: 0.0000000037988097, z: -4.2393125e-10, w: 0.99383074}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
