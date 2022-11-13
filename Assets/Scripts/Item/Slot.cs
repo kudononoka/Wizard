@@ -44,6 +44,7 @@ public class Slot : MonoBehaviour
         }
     }
 
+    /// <summary>item‚Ì”‚ğ‘‚â‚µ‚Ü‚·</summary>
     public void In()
     {
         Debug.Log("ŒÄ‚Î‚ê‚Ü‚µ‚½");
@@ -51,6 +52,7 @@ public class Slot : MonoBehaviour
         itemNumText.text = $"~{itemNum}";
     }
     
+    /// <summary>item‚Ì”‚ğŒ¸‚ç‚µ‚Ü‚·</summary>
     public void Out()
     {
         itemNum--;

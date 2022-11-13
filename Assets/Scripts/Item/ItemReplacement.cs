@@ -6,7 +6,6 @@ using System.Linq;
 public class ItemReplacement : MonoBehaviour
 {
     [SerializeField] EventSystem eventSystem;
-
     [SerializeField] GameObject itemBox;
     [SerializeField] GameObject itemPouch;
 
@@ -15,42 +14,46 @@ public class ItemReplacement : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            //UIの押されたButtonのオブジェクトがNullじゃなかったら取得
             if (eventSystem.currentSelectedGameObject.gameObject != null)
             {
-                InOut();
+                Replacement();
             }
         }
     }
 
-    public void InOut()
+    public void Replacement()
     {
         
         itemButton = eventSystem.currentSelectedGameObject.gameObject;
 
         Slot item = itemButton.GetComponent<Slot>();
-        Debug.Log(itemButton.transform.parent.gameObject.transform.parent.gameObject.name);
+
+        //押されたButtonのGameObjectの親親オブジェクトがItemBoxの場合→ItemPouchに属する同じGameObject名のitemの数が増え、ItemBoxのitemの数が減る
+        
         if (itemButton.transform.parent.gameObject.transform.parent.gameObject == itemBox)
         {
-            GameObject itemPouchSlotGrid = itemPouch.transform.GetChild(0).gameObject;
-            
-            List<string> allItemNames = itemPouchSlotGrid.GetComponent<SlotGrid>().AllItemNames;
-            if (allItemNames.Contains(item.Myitem.MyitemName) && item.ItemNum > 0)
-            {
-                Slot itemIsPouch = itemPouchSlotGrid.transform.Find(item.Myitem.MyitemName).GetComponent<Slot>();
-                item.Out();
-                itemIsPouch.In();
-            }
+            ItemInOut(itemPouch, item);
         }
-        else if(itemButton.transform.parent.gameObject.transform.parent.gameObject == itemPouch)
+        //ItemPouchの場合→ItemBoxに属する同じGameObject名のitemの数が増え、ItemPouchのitemの数が減る
+        else if (itemButton.transform.parent.gameObject.transform.parent.gameObject == itemPouch)
         {
-            GameObject itemBoxSlotGrid = itemBox.transform.GetChild(0).gameObject;
-            List<string> allItemNames = itemBoxSlotGrid.GetComponent<SlotGrid>().AllItemNames;
-            if (allItemNames.Contains(item.Myitem.MyitemName) && item.ItemNum > 0)
-            {
-                Slot itemIsBox = itemBoxSlotGrid.transform.Find(item.Myitem.MyitemName).GetComponent<Slot>();
-                item.Out();
-                itemIsBox.In();
-            }
+            ItemInOut(itemBox, item);
+        }
+    }
+
+    public void ItemInOut(GameObject itemGoToWhere, Slot item)
+    {
+        GameObject itemSlotGrid = itemGoToWhere.transform.GetChild(0).gameObject;
+
+        //SlotGridにあるItemの名前のListを取得
+        List<string> allItemNames = itemSlotGrid.GetComponent<SlotGrid>().AllItemNames;
+        //もう一つのSlotGridに同じitem名がありかつ自身のItemの数が０以上の時自身のitem数を-1し、反対のitemに+1します
+        if (allItemNames.Contains(item.Myitem.MyitemName) && item.ItemNum > 0)
+        {
+            Slot itemIsGoTo = itemSlotGrid.transform.Find(item.Myitem.MyitemName).GetComponent<Slot>();
+            item.Out(); 
+            itemIsGoTo.In();　
         }
     }
 

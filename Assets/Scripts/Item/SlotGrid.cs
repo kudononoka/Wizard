@@ -11,7 +11,8 @@ public class SlotGrid : MonoBehaviour
     [SerializeField] ItemBase[] allItem;
 
     List<string> allItemNames = new List<string>();
-    public ItemBase[] AllItems { get { return allItem; } }
+
+    //public ItemBase[] AllItems { get { return allItem; } }
     public List<string> AllItemNames { get { return allItemNames; } }
     private void Start()
     {
@@ -26,7 +27,6 @@ public class SlotGrid : MonoBehaviour
             {
                 slot.SetItem(allItem[i]);
                 allItemNames.Add(allItem[i].MyitemName);
-                Debug.Log(AllItemNames[i]);
             }
             else
             {
