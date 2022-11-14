@@ -5,14 +5,16 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour, InterfacePause
 {
     Rigidbody _rb;
-    /// <summary>歩行速度</summary>
-    [Header("歩行速度"), SerializeField] float _walkSpeed;
-    /// <summary>方向転換速度</summary>
-    [Header("方向転換速度"), SerializeField] float _rotateSpeed;
-    /// <summary>ジャンプ力</summary>
-    [Header("ジャンプ力"), SerializeField] float _jumpPower;
-    ///<summary>回避速度</summary>
-    [Header("回避速度"), SerializeField] float _avoidanceSpeed;
+    
+    [Tooltip("歩行速度"), SerializeField] float _walkSpeed;
+    
+    [Tooltip("方向転換速度"), SerializeField] float _rotateSpeed;
+    
+    [Tooltip("ジャンプ力"), SerializeField] float _jumpPower;
+   
+    [Tooltip("回避速度"), SerializeField] float _avoidanceSpeed;
+
+    [Tooltip("Shieldとなるコライダー"),SerializeField] MeshCollider shield;
 
     /// <summary>MainCamera</summary>
     GameObject _mainCamera;
@@ -23,7 +25,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
     /// <summary>地面から離れた時かける重力</summary>
     [Header("重力"), SerializeField] float _gravity;
 
-    bool Avoidance;
+    
     Vector3 velo;
     GroundJudgment groundJudgment;
     void Start()
@@ -56,6 +58,15 @@ public class PlayerMove : MonoBehaviour, InterfacePause
             if(Input.GetButtonDown("JumpController"))
             {
                 _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+            }
+
+            if(Input.GetButton("Shield"))
+            {
+                shield.enabled = true;
+            }
+            else
+            {
+                shield.enabled = false; 
             }
 
             if(Input.GetButtonDown("AvoidanceController"))
