@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class SceneSwitcher : MonoBehaviour
 {
     [Header("移動先のシーン"), SerializeField] string _sceneName;
-    [Header("移動先"), SerializeField] Transform _arrivalPoint;
+    [Header("移動先のオブジェクト"), SerializeField] string _arrivalPoint;
 
-    void SwitchScene(string sceneName, Transform arrivalPoint)
+    void SwitchScene(string sceneName, string arrivalPoint,Vector3 dir)
     {
+        GameManager.Instance.StartPointName = arrivalPoint;
+        GameManager.Instance.StartPlayerDir = dir;
         SceneManager.LoadScene(sceneName);
     }
 
@@ -17,7 +19,7 @@ public class SceneSwitcher : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-
+            SwitchScene(_sceneName, _arrivalPoint,other.gameObject.transform.eulerAngles);
         }
     }
 }

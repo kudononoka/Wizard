@@ -7,7 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance = default;
     // Start is called before the first frame update
+    private string _startPointName = "";
+    private Vector3 _startPlayerDir = Vector3.zero;
 
+    public string StartPointName { get => _startPointName; set => _startPointName = value; }
+    public Vector3 StartPlayerDir { get => _startPlayerDir; set => _startPlayerDir = value;}
     private void Awake()
     {
         if(Instance)
@@ -26,19 +30,24 @@ public class GameManager : MonoBehaviour
     {
         var player = GameObject.FindGameObjectWithTag("Player");
 
-        //if (this.PointNameOnSceneLoaded != "")
-        //{
-        //    var point = GameObject.Find(this.PointNameOnSceneLoaded);
+        if (_startPointName != "")
+        {
+            Vector3 point = GameObject.Find(_startPointName).GetComponent<Transform>().position;
 
-        //    if (player)
-        //    {
-        //        player.transform.position = point.transform.position;
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Player Ç™å©Ç¬Ç©ÇËÇ‹ÇπÇÒÅB");
-        //    }
-        //}
+            if (player)
+            {
+                player.transform.position = point;
+            }
+            else
+            {
+                Debug.LogError("Player Ç™å©Ç¬Ç©ÇËÇ‹ÇπÇÒÅB");
+            }
+        }
+
+        if(player)
+        {
+            player.transform.eulerAngles = _startPlayerDir;
+        }
     }
     void Start()
     {
