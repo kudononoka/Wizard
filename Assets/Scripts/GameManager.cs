@@ -17,8 +17,28 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
+            SceneManager.sceneLoaded += SceneLoad;
             DontDestroyOnLoad(this.gameObject);
         }
+    }
+
+    void SceneLoad(Scene scene,LoadSceneMode mode)
+    {
+        var player = GameObject.FindGameObjectWithTag("Player");
+
+        //if (this.PointNameOnSceneLoaded != "")
+        //{
+        //    var point = GameObject.Find(this.PointNameOnSceneLoaded);
+
+        //    if (player)
+        //    {
+        //        player.transform.position = point.transform.position;
+        //    }
+        //    else
+        //    {
+        //        Debug.LogError("Player Ç™å©Ç¬Ç©ÇËÇ‹ÇπÇÒÅB");
+        //    }
+        //}
     }
     void Start()
     {
