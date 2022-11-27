@@ -22,4 +22,9 @@ public class SceneSwitcher : MonoBehaviour
             SwitchScene(_sceneName, _arrivalPoint,other.gameObject.transform.eulerAngles);
         }
     }
+
+    private void NormalSceneMove()
+    {
+        SceneManager.LoadScene(_sceneName);
+    }
 }
