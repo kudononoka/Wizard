@@ -12,14 +12,14 @@ public class ItemReplacement : MonoBehaviour
     GameObject itemButton;
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //UIの押されたButtonのオブジェクトがNullじゃなかったら取得
-            if (eventSystem.currentSelectedGameObject.gameObject != null)
-            {
-                Replacement();
-            }
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    //UIの押されたButtonのオブジェクトがNullじゃなかったら取得
+        //    if (eventSystem.currentSelectedGameObject.gameObject != null)
+        //    {
+        //        Replacement();
+        //    }
+        //}
     }
 
     public void Replacement()

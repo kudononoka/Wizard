@@ -28,6 +28,9 @@ public class PlayerMove : MonoBehaviour, InterfacePause
     
     Vector3 velo;
     GroundJudgment groundJudgment;
+
+    bool ispos;
+    Vector3 spos;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -68,18 +71,26 @@ public class PlayerMove : MonoBehaviour, InterfacePause
             {
                 shield.enabled = false; 
             }
-
-            if(Input.GetButtonDown("AvoidanceController"))
+            
+            if(Input.GetButton("AvoidanceController"))
             {
-                
-                Debug.Log("‰ñ”ð");
-                if (_rb.velocity != Vector3.zero)
+                if (ispos)
                 {
-                    velo = _rb.velocity;
-                    //transform.position = Vector3.MoveTowards(transform.position, transform.position + _rb.velocity * 200, _avoidanceSpeed * Time.deltaTime);
-                    StartCoroutine(Avoid());
+                    spos = transform.position;
+                    ispos = false;
                 }
-                
+                if (Vector3.Distance(transform.position, spos) < 3)
+                {
+                    Debug.Log("‰ñ”ð");
+                    Vector3 velo = _rb.velocity;
+                    velo *= 2;
+                    _rb.velocity = velo;
+                }
+
+            }
+            else
+            {
+                ispos = true;
             }
         }
         else

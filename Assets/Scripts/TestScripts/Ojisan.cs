@@ -19,9 +19,9 @@ public class Ojisan : MonoBehaviour
     {
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
-
+      
         _rb.velocity = new Vector3(x * _speed ,0,z * _speed);
-
+        Debug.Log(_rb.velocity);
         _anim.SetFloat("YokoWalk" , x);
         _anim.SetInteger("YokoWalk 0", (int)x);
 
