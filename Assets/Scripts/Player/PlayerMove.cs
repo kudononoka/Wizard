@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,24 +6,24 @@ public class PlayerMove : MonoBehaviour, InterfacePause
 {
     Rigidbody _rb;
     
-    [Tooltip("•às‘¬“x"), SerializeField] float _walkSpeed;
+    [Tooltip("æ­©è¡Œé€Ÿåº¦"), SerializeField] float _walkSpeed;
     
-    [Tooltip("•ûŒü“]Š·‘¬“x"), SerializeField] float _rotateSpeed;
+    [Tooltip("æ–¹å‘è»¢æ›é€Ÿåº¦"), SerializeField] float _rotateSpeed;
     
-    [Tooltip("ƒWƒƒƒ“ƒv—Í"), SerializeField] float _jumpPower;
+    [Tooltip("ã‚¸ãƒ£ãƒ³ãƒ—åŠ›"), SerializeField] float _jumpPower;
    
-    [Tooltip("‰ñ”ğ‘¬“x"), SerializeField] float _avoidanceSpeed;
+    [Tooltip("å›é¿é€Ÿåº¦"), SerializeField] float _avoidanceSpeed;
 
-    [Tooltip("Shield‚Æ‚È‚éƒRƒ‰ƒCƒ_["),SerializeField] MeshCollider shield;
+    [Tooltip("Shieldã¨ãªã‚‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼"),SerializeField] MeshCollider shield;
 
     /// <summary>MainCamera</summary>
     GameObject _mainCamera;
 
-    /// <summary>Player‚Ì‘O•û</summary>
+    /// <summary>Playerã®å‰æ–¹</summary>
     Quaternion _foward;
 
-    /// <summary>’n–Ê‚©‚ç—£‚ê‚½‚©‚¯‚éd—Í</summary>
-    [Header("d—Í"), SerializeField] float _gravity;
+    /// <summary>åœ°é¢ã‹ã‚‰é›¢ã‚ŒãŸæ™‚ã‹ã‘ã‚‹é‡åŠ›</summary>
+    [Header("é‡åŠ›"), SerializeField] float _gravity;
 
     
     Vector3 velo;
@@ -46,7 +46,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
 
         if (groundJudgment.IsGround)
         {
-            //ƒJƒƒ‰‚Ìy²‚ÌƒIƒCƒ‰[Šp‚ğæ“¾
+            //ã‚«ãƒ¡ãƒ©ã®yè»¸ã®ã‚ªã‚¤ãƒ©ãƒ¼è§’ã‚’å–å¾—
             Quaternion _mainCamaraforward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
             _rb.velocity = _mainCamaraforward.normalized * new Vector3(x * _walkSpeed, 0, -z * _walkSpeed);
 
@@ -55,7 +55,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
                 _foward = Quaternion.LookRotation(_rb.velocity, Vector3.up);
             }
 
-            //ŠŠ‚ç‚©‚É‰ñ“]‚³‚¹‚é
+            //æ»‘ã‚‰ã‹ã«å›è»¢ã•ã›ã‚‹
             transform.rotation = Quaternion.RotateTowards(transform.rotation, _foward, _rotateSpeed * Time.deltaTime);
 
             if(Input.GetButtonDown("JumpController"))
@@ -81,7 +81,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
                 }
                 if (Vector3.Distance(transform.position, spos) < 3)
                 {
-                    Debug.Log("‰ñ”ğ");
+                    Debug.Log("å›é¿");
                     Vector3 velo = _rb.velocity;
                     velo *= 2;
                     _rb.velocity = velo;

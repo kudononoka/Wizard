@@ -1,12 +1,12 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
-    [Header("ˆÚ“®æ‚ÌƒV[ƒ“"), SerializeField] string _sceneName;
-    [Header("ˆÚ“®æ‚ÌƒIƒuƒWƒFƒNƒg"), SerializeField] string _arrivalPoint;
+    [Header("ç§»å‹•å…ˆã®ã‚·ãƒ¼ãƒ³"), SerializeField] string _sceneName;
+    [Header("ç§»å‹•å…ˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ"), SerializeField] string _arrivalPoint;
 
     void SwitchScene(string sceneName, string arrivalPoint,Vector3 dir)
     {

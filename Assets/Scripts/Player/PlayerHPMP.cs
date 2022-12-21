@@ -5,14 +5,25 @@ using UnityEngine.UI;
 
 public class PlayerHPMP : MonoBehaviour
 {
+    [SerializeField] Slider _slider;
     int _nowHp;
     [SerializeField] int _maxHp;
     int _nowMp;
     [SerializeField] int _maxMp;
+    [SerializeField, Header("ótÇ¡ÇœÇÃñáêî")] int _reafNum;
     
+    GridLayoutGroup _gridLayoutGroup;
+    int _costMPAmount;
+    public int ReafNum { get { return _reafNum; }}
+
+    public int CostMPAmount { get { return _costMPAmount; } }
     void Start()
     {
         _nowHp = _maxHp;
+        
+        _gridLayoutGroup = GameObject.Find("MP").GetComponent<GridLayoutGroup>();
+        _gridLayoutGroup.constraintCount = _reafNum;
+        _maxMp = _reafNum * 2;
         _nowMp = _maxMp;
     }
 
@@ -32,12 +43,17 @@ public class PlayerHPMP : MonoBehaviour
     /// <param name="amount">è¡îÔó </param>
     public void MPConsumption(int amount)
     {
-        _nowMp -= amount;
+        _costMPAmount = amount;
     }
 
     /// <param name="amount">âÒïúó </param>
     public void MPRecovery(int amount)
     {
         _nowMp += amount;
+    }
+
+    void MPChangeValue()
+    {
+
     }
 }

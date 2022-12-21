@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "Items", menuName = "Items/item")]
-public class ItemBase : ScriptableObject
+public abstract class ItemBase : ScriptableObject
 {
     [Tooltip("アイテム名"), SerializeField] string itemName;
     [Tooltip("アイテムimage"), SerializeField] Sprite itemImage;
@@ -12,4 +12,5 @@ public class ItemBase : ScriptableObject
     public string MyitemName { get => itemName;}
     public Sprite MyitemImage { get => itemImage;}
 
+    public abstract void Action();
 }
