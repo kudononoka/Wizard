@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerHPMP : MonoBehaviour
 {
-    [SerializeField] Slider _slider;
+    [SerializeField] Slider _sliderHp;
     int _nowHp;
     [SerializeField] int _maxHp;
     int _nowMp;
     [SerializeField] int _maxMp;
+
+    int _minHp = 0;
     [SerializeField, Header("ótÇ¡ÇœÇÃñáêî")] int _reafNum;
     
     GridLayoutGroup _gridLayoutGroup;
@@ -20,7 +22,9 @@ public class PlayerHPMP : MonoBehaviour
     void Start()
     {
         _nowHp = _maxHp;
-        
+        _sliderHp.maxValue = _nowHp;
+        _sliderHp.minValue = _minHp;
+        _sliderHp.value = _nowHp;
         _gridLayoutGroup = GameObject.Find("MP").GetComponent<GridLayoutGroup>();
         _gridLayoutGroup.constraintCount = _reafNum;
         _maxMp = _reafNum * 2;
@@ -32,12 +36,22 @@ public class PlayerHPMP : MonoBehaviour
     public void HPDamage(int damage)
     {
         _nowHp -= damage;
+        _sliderHp.value = _nowHp;
+        if (_nowHp < _minHp)
+        {
+
+        }
     }
 
     /// <param name="amount">âÒïúó </param>
     public void HPRecovery(int amount)
     {
         _nowHp += amount;
+        if(_nowHp > _maxHp)
+        {
+            _nowHp = _maxHp;
+        }
+        _sliderHp.value = _nowHp;
     }
 
     /// <param name="amount">è¡îÔó </param>
@@ -50,10 +64,5 @@ public class PlayerHPMP : MonoBehaviour
     public void MPRecovery(int amount)
     {
         _nowMp += amount;
-    }
-
-    void MPChangeValue()
-    {
-
     }
 }

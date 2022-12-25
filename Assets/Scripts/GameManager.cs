@@ -1,20 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance = default;
-    // Start is called before the first frame update
     private string _startPointName = "";
     private Vector3 _startPlayerDir = Vector3.zero;
 
     public string StartPointName { get => _startPointName; set => _startPointName = value; }
-    public Vector3 StartPlayerDir { get => _startPlayerDir; set => _startPlayerDir = value;}
+    public Vector3 StartPlayerDir { get => _startPlayerDir; set => _startPlayerDir = value; }
     private void Awake()
     {
-        if(Instance)
+        if (Instance)
         {
             Destroy(this.gameObject);
         }
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void SceneLoad(Scene scene,LoadSceneMode mode)
+    void SceneLoad(Scene scene, LoadSceneMode mode)
     {
         var player = GameObject.FindGameObjectWithTag("Player");
 
@@ -44,19 +44,38 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(player)
+        if (player)
         {
             player.transform.eulerAngles = _startPlayerDir;
         }
     }
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+
+    /// <summary>現在のゲームの状態管理用のenum</summary>
+    public enum GameState
+    {
+        Title = 0,
+        isGame = 1,
+        GameOver = 2,
+        GameClear = 3,
+        Result = 4,
+    }
+    /// <summary>現在のPlayerの状態管理用のenum・PlayerHPMPスクリプトに書くほうがいいのか</summary>
+    [Flags]
+    public enum PlayerState
+    {
+        Normal = 1 << 0,
+        Burn = 1 << 1,
+        Poison = 1 << 2,
     }
 }
