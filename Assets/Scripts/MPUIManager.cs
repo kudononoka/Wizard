@@ -6,12 +6,20 @@ using System.Linq;
 
 public class MPUIManager : MonoBehaviour
 {
-    [SerializeField] GameObject _leafPrefab;
-    [SerializeField] Sprite _leafHalfSprite;
-    [SerializeField] Sprite _leafNoneSprite;
-    [SerializeField] Sprite _leafNormalSprite;
-    [SerializeField] List<Image> _usebleMPLeaf = new List<Image>();
-    [SerializeField] List<Image> _MPLeaf = new List<Image>();
+    //////////////////////////////////////////////////////////////////////////////
+    //////////////////////////MPは葉っぱで表現しています//////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
+
+    //葉っぱ一枚  満タンでMP:2　半分でMP:1 輪郭だけ表示されている状態でMP:0
+    [SerializeField, Tooltip("満タンの状態の葉っぱSpriteのゲームオブジェクトPrefabです")] GameObject _leafPrefab;
+    [SerializeField, Tooltip("半分の状態の葉っぱSprite")] Sprite _leafHalfSprite;
+    [SerializeField, Tooltip("なんもない状態の葉っぱSprite(輪郭だけ)")] Sprite _leafNoneSprite;
+    [SerializeField, Tooltip("満タンの状態の葉っぱSprite")] Sprite _leafNormalSprite;
+
+    ///<summary>このListは葉っぱ一枚のMPが0になったらListから外します</summary>
+    [SerializeField, Tooltip("今使用できるMP(葉っぱ)のUIList")] List<Image> _usebleMPLeaf = new List<Image>();
+    ///<summary>このListは葉っぱ一枚のMPが0になったとしてもListにあり続けます</summary>
+    [SerializeField, Tooltip("生成した全ての葉っぱUIの保管場所")] List<Image> _MPLeaf = new List<Image>();
     PlayerHPMP _playerHPMP;
     GridLayoutGroup _group;
     RectTransform _rectTransform;
@@ -40,20 +48,23 @@ public class MPUIManager : MonoBehaviour
             GameObject go =  Instantiate(_leafPrefab, this.transform);
             Image sprite = go.GetComponent<Image>();
             //生成した葉っぱUIのSpriteをListに入れていく
-            _usebleMPLeaf.Add(sprite);　 //今使用できるMP(葉っぱ)のUIList
-            _MPLeaf.Add(sprite);　//生成した全ての葉っぱUIの保管場所
+            _usebleMPLeaf.Add(sprite);　 
+            _MPLeaf.Add(sprite);　
         }
         
     }
-
+    /// <summary>MP消費に関してのSprite管理関数</summary>
+    /// _usebleMPLeafのListは葉っぱ一枚のMPが0になったらListから外す
+    /// <param name="amount">消費する量</param>
     public void Consumption(int amount)
     {
+        //一枚につきMP2なのでamountを２で除算
         int n = amount / 2;
         int n2 = amount % 2;
         //使用できるMPの葉っぱUIの最後尾が半分の葉っぱUIの状態だったら
         if (_usebleMPLeaf[_usebleMPLeaf.Count - 1].sprite == _leafHalfSprite)
         {
-             //半分の葉っぱUIを輪郭だけの葉っぱUIに変える
+            //半分の葉っぱUIを輪郭だけの葉っぱUIに変える
             _usebleMPLeaf[_usebleMPLeaf.Count - 1].sprite = _leafNoneSprite;
             _usebleMPLeaf.RemoveAt(_usebleMPLeaf.Count - 1);
             amount--;
@@ -79,29 +90,11 @@ public class MPUIManager : MonoBehaviour
             amount--;
             n = amount / 2;
             n2 = amount % 2;
-            if (_usebleMPLeaf.Count < 10)
-            {
-                for (var i = 1; i <= n; i++)
-                {
-                    MPRecoverySpriteChange(_leafNormalSprite);
-                }
-                if (n2 == 1)
-                {
-                    MPRecoverySpriteChange(_leafHalfSprite);
-                }
-            }
+            MPRecoverySpriteChange(n, n2);
         }
         else
         {
-            for (var i = 1; i <= n && _usebleMPLeaf.Count < 10; i++)
-            {
-                MPRecoverySpriteChange(_leafNormalSprite);
-            }
-            if (n2 == 1 && _usebleMPLeaf.Count < 10)
-            {
-                MPRecoverySpriteChange(_leafHalfSprite);
-            }
-
+            MPRecoverySpriteChange(n, n2);
         }
     }
     public void MPConsumptionSpriteChange(int n, int n2)
@@ -117,12 +110,21 @@ public class MPUIManager : MonoBehaviour
         }
     }
 
-    public void MPRecoverySpriteChange(Sprite sprite)
+    public void MPRecoverySpriteChange(int n, int n2)
     {
-        //Listに入っている葉っぱUIの中で輪郭だけの葉っぱUIの先頭を変数に入れる
-        var listSprite = _MPLeaf.Where(x => x.sprite == _leafNoneSprite).First();
-        //新たに使用可能のMP葉っぱUIListにいれSpriteを半分の状態の葉っぱUIか普通の葉っぱUIに変える
-        _usebleMPLeaf.Add(listSprite);
-        _usebleMPLeaf[_usebleMPLeaf.Count - 1].sprite = sprite;
+        for (var i = 1; i <= n && _usebleMPLeaf.Count < 10; i++)
+        {
+            //Listに入っている葉っぱUIの中で輪郭だけの葉っぱUIの先頭を変数に入れる
+            var listSprite = _MPLeaf.Where(x => x.sprite == _leafNoneSprite).First();
+            //新たに使用可能のMP葉っぱUIListにいれSpriteを半分の状態の葉っぱUIか普通の葉っぱUIに変える
+            _usebleMPLeaf.Add(listSprite);
+            _usebleMPLeaf[_usebleMPLeaf.Count - 1].sprite = _leafNormalSprite;
+        }
+        if (n2 == 1 && _usebleMPLeaf.Count < 10)
+        {
+            var listSprite = _MPLeaf.Where(x => x.sprite == _leafNoneSprite).First();
+            _usebleMPLeaf.Add(listSprite);
+            _usebleMPLeaf[_usebleMPLeaf.Count - 1].sprite = _leafHalfSprite;
+        }
     }
 }

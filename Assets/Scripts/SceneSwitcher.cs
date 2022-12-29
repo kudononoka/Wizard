@@ -23,7 +23,7 @@ public class SceneSwitcher : MonoBehaviour
         }
     }
 
-    private void NormalSceneMove()
+    public void NormalSceneMove()
     {
         SceneManager.LoadScene(_sceneName);
     }

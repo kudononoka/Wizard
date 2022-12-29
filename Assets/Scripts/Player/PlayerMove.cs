@@ -16,6 +16,10 @@ public class PlayerMove : MonoBehaviour, InterfacePause
 
     [Tooltip("Shieldとなるコライダー"),SerializeField] MeshCollider shield;
 
+    [SerializeField] Transform _afterAvoidancePos;
+
+    Vector3 _savePos;
+
     /// <summary>MainCamera</summary>
     GameObject _mainCamera;
 
@@ -25,17 +29,17 @@ public class PlayerMove : MonoBehaviour, InterfacePause
     /// <summary>地面から離れた時かける重力</summary>
     [Header("重力"), SerializeField] float _gravity;
 
+    Vector3 _velo;
+    GroundJudgment _groundJudgment;
     
-    Vector3 velo;
-    GroundJudgment groundJudgment;
-
-    bool ispos;
-    Vector3 spos;
+    bool _ispos;
+    Vector3 _spos;
+    Vector3 _dir;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _mainCamera = Camera.main.gameObject;
-        groundJudgment = GetComponent<GroundJudgment>();
+        _groundJudgment = GetComponent<GroundJudgment>();
     }
 
     
@@ -44,7 +48,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
         float x = Input.GetAxisRaw("HorizontalController");
         float z = Input.GetAxisRaw("VerticalController");
 
-        if (groundJudgment.IsGround)
+        if (_groundJudgment.IsGround)
         {
             //カメラのy軸のオイラー角を取得
             Quaternion _mainCamaraforward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
@@ -74,23 +78,23 @@ public class PlayerMove : MonoBehaviour, InterfacePause
             
             if(Input.GetButton("AvoidanceController"))
             {
-                if (ispos)
+                if (_ispos)
                 {
-                    spos = transform.position;
-                    ispos = false;
-                }
-                if (Vector3.Distance(transform.position, spos) < 3)
-                {
-                    Debug.Log("回避");
-                    Vector3 velo = _rb.velocity;
-                    velo *= 2;
-                    _rb.velocity = velo;
-                }
+                   // _spos = transform.position;
+                    //_dir = transform.forward;
+                    _savePos = _afterAvoidancePos.position;
+                    _ispos = false;
 
+                }
+                //if (Vector3.Distance(transform.position, _spos) < 4)
+                //{
+                //    _rb.velocity *= 4;
+                //}
+                transform.position = Vector3.MoveTowards(transform.position, _savePos, _avoidanceSpeed * Time.deltaTime);
             }
             else
             {
-                ispos = true;
+                _ispos = true;
             }
         }
         else
@@ -108,13 +112,5 @@ public class PlayerMove : MonoBehaviour, InterfacePause
         _walkSpeed = 10;
     }
 
-    IEnumerator Avoid()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + velo * 200, _avoidanceSpeed * Time.deltaTime);
-        _walkSpeed = 0;
-        yield return new WaitForSeconds(1);
-        _walkSpeed = 10;
-        
-        
-    }
+    
 }
