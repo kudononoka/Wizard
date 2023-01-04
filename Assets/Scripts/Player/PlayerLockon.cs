@@ -15,7 +15,9 @@ public class PlayerLockon : MonoBehaviour
     [SerializeField, Header("ロックオン中のVC")] CinemachineVirtualCamera _virtualCamera;
     [SerializeField, Header("普段使う仮想カメラ(FreeLook)")] CinemachineFreeLook _freelookCmera;
     /// <summary>Trueの時　ロックオン中</summary>
-    bool _isLockon = false; public bool IsLockon => _isLockon;
+    bool _isLockon = false;
+    /// <summary>Trueの時　ロックオン中</summary>
+    public bool IsLockon => _isLockon;
     // Start is called before the first frame update
     void Start()
     {

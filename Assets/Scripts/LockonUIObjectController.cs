@@ -9,12 +9,10 @@ public class LockonUIObjectController : MonoBehaviour
     Transform _mcTransform;
     RectTransform _rectTransform;
     PlayerLockon _playerLockon;
-
+    /// <summary>MainCameraからロックオンしているEnemyGOまでのベクトルを保管するための変数</summary>
     Vector3 _dir;
-
-    [SerializeField] float _raydistance = 1000;
-
-    [SerializeField] LayerMask _layerMask;
+    /// <summary>MainCameraからロックオンしているEnemyGOまでのベクトルを保管するための変数</summary>
+    [SerializeField, Header("カメラとこのオブジェクト(LockonUICanvas)の距離調整用"), Tooltip("割合として使うため0～1に、1に近づくにつれこのオブジェクトがカメラから離れていく"), Range(0, 1f)] float _lockonUIdistance;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,18 +27,20 @@ public class LockonUIObjectController : MonoBehaviour
 
         if(_playerLockon.IsLockon)
         {
+            //MainCameraからロックオンしているEnemyGOの向きを取得
             _dir = _playerLockon.TargetPos.position - _mcTransform.position;
-            _rectTransform.forward = _dir;
-            Ray ray = new Ray(_mcTransform.position, _dir);
-            RaycastHit hit;
-            if(Physics.Raycast(ray, out hit, _raydistance, _layerMask))
-            {
-                Vector3 point = (hit.point - _mcTransform.position) * 0.9f;
-                //point.z += 1;
-                Vector3 pos = _mcTransform.position + point;
-                _rectTransform.position = pos;
-            }
-            Debug.DrawRay(_mcTransform.position, _dir, Color.red, _raydistance);
+
+            //このゲームオブジェクトのCanvasをカメラ方向に向ける
+            _rectTransform.forward = -_dir;
+
+            //_dirベクトル線上にこのgoを置く
+            //新しいベクトルvectorEndpointの終点をこのgoを置く予定の場所とし、終点は_dirベクトルの割合で調整する
+            Vector3 vectorEndpoint = _dir * _lockonUIdistance;
+
+            //MainCameraのワールド座標のベクトルとMainCameraからこのgoを置く予定の場所までのベクトルを足して
+            //このgoを置く予定の場所のワールド座標を求め、transformに代入
+            _rectTransform.position = _mcTransform.position + vectorEndpoint;
+            
         }
     }
 }

@@ -8,11 +8,14 @@ public class PlayerMasicAttack : MonoBehaviour
     [SerializeField, Header("魔法を生成する場所")] Transform[] _masicSpawnPoint;
     [SerializeField,Header("魔法のオブジェクトPrefab")] GameObject _masicObject;
     [SerializeField, Header("オブジェクトがLookonしたターゲットに向かって移動する速度")] float _masicObjectMoveSpeed;
-    /// <summary>オブジェクトがLookonしたターゲットに向かって移動する関数を実装</summary>
+    /// <summary>オブジェクトがLockonしたターゲットに向かって移動する関数を実装するデリゲート</summary>
     event Action _masicAction;
+    /// <summary>オブジェクトがLockonしたターゲットに向かって移動する関数を実装するデリゲートカプセル化</summary>
     public Action MasicAction { get { return _masicAction; } set { _masicAction = value; } }
-
+    /// <summary>オブジェクトがLookonしたターゲットに向かって移動する速度</summary>
     public float MasicObjectMoveSpeed => _masicObjectMoveSpeed;
+
+    [SerializeField, Header("生成されてから動くまでの停止時間")] float _intervalObjectMove = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
