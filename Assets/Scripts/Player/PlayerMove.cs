@@ -18,6 +18,8 @@ public class PlayerMove : MonoBehaviour, InterfacePause
 
     [SerializeField] Transform _afterAvoidancePos;
 
+    [SerializeField, Header("コントローラー操作かどうか"), Tooltip("Trueの時コントローラー操作用")] bool _isController; 
+
     Vector3 _savePos;
 
     /// <summary>MainCamera</summary>
@@ -45,8 +47,8 @@ public class PlayerMove : MonoBehaviour, InterfacePause
     
     void Update()
     {
-        float x = Input.GetAxisRaw("HorizontalController");
-        float z = Input.GetAxisRaw("VerticalController");
+        float x = _isController ? Input.GetAxisRaw("HorizontalController") : Input.GetAxisRaw("Horizontal");
+        float z = _isController ? Input.GetAxisRaw("VerticalController") : Input.GetAxisRaw("Vertical");
 
         if (_groundJudgment.IsGround)
         {
