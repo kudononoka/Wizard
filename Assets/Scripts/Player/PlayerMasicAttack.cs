@@ -20,6 +20,9 @@ public class PlayerMasicAttack : MonoBehaviour
     PlayerLockon _lockon;
     /// <summary>今魔法オブジェクトがある時消えるまで次の魔法オブジェクトを出さないtためのList・Countが0になったら生成できるようにする</summary>
     List<GameObject> _nowMasicGOActive = new List<GameObject>();
+    /// <summary>Enemyに与えるダメージ</summary>
+    [SerializeField,Header("Enemyに与えるダメージ")]int _enemyDamage;
+
     // Start is called before the first frame update
     void Start()
     {
