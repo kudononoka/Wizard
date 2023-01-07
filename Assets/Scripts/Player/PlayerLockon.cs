@@ -6,9 +6,9 @@ using Cinemachine;
 
 public class PlayerLockon : MonoBehaviour
 {
-    List<GameObject> _goEnemise = new List<GameObject>();
+    [SerializeField]List<GameObject> _goEnemise = new List<GameObject>();
     int _index;
-    [Tooltip("ロックオンした時の対象のゲームオブジェクト")]Transform _targetPos; public Transform TargetPos => _targetPos;
+    [Tooltip("ロックオンした時の対象のゲームオブジェクト")]Transform _targetPos; public Transform TargetPos{get { return _targetPos; }set { _targetPos = value; }}
     [SerializeField] CinemachineTargetGroup _group;
     [SerializeField, Tooltip("TargetGroupのtargetのweight")] float _weight;
     [SerializeField, Tooltip("TargetGroupのtargetのradius")] float _radius;
@@ -21,7 +21,6 @@ public class PlayerLockon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AddListEnemy();
         _isLockon = false;
         _freelookCmera.MoveToTopOfPrioritySubqueue();
     }
@@ -35,16 +34,18 @@ public class PlayerLockon : MonoBehaviour
             _isLockon = !_isLockon;
             if (_isLockon)
             {
+                AddListEnemy();
                 _virtualCamera.MoveToTopOfPrioritySubqueue();
                 _targetPos = _goEnemise[_index].GetComponent<Transform>();
             }
             else
             {
                 _freelookCmera.MoveToTopOfPrioritySubqueue();
+                _goEnemise.Clear();
             }
         }
         if (Input.GetKeyDown(KeyCode.Space) && _isLockon)
-        {
+        { 
             _targetPos = _goEnemise[_index].GetComponent<Transform>(); 
             _group.m_Targets[1].target = _targetPos;
 
@@ -58,10 +59,28 @@ public class PlayerLockon : MonoBehaviour
 
         if(_isLockon)
         {
-            Vector3 pos = _targetPos.position;
-            pos.y = 0;
-           
-            transform.rotation = Quaternion.LookRotation(pos);
+            if (_goEnemise.Count == 0)
+            {
+                _freelookCmera.MoveToTopOfPrioritySubqueue();
+                _isLockon = !_isLockon;
+            }
+            else
+            {
+                if (_targetPos == null)
+                {
+                    _goEnemise.RemoveAll(enemy => enemy == null);
+                    if (_goEnemise.Count > 0)
+                    {
+                        _targetPos = _goEnemise[_index].GetComponent<Transform>();
+                    }
+                }
+                else
+                {
+                    Vector3 pos = _targetPos.position;
+                    pos.y = 0;
+                    transform.rotation = Quaternion.LookRotation(pos);
+                }
+            }
         }
     }
 

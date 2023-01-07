@@ -28,7 +28,10 @@ public class LockonUIObjectController : MonoBehaviour
         if(_playerLockon.IsLockon)
         {
             //MainCameraからロックオンしているEnemyGOの向きを取得
-            _dir = _playerLockon.TargetPos.position - _mcTransform.position;
+            if (_playerLockon.TargetPos != null)
+            {
+                _dir = _playerLockon.TargetPos.position - _mcTransform.position;
+            }
 
             //このゲームオブジェクトのCanvasをカメラ方向に向ける
             _rectTransform.forward = -_dir;
@@ -41,6 +44,13 @@ public class LockonUIObjectController : MonoBehaviour
             //このgoを置く予定の場所のワールド座標を求め、transformに代入
             _rectTransform.position = _mcTransform.position + vectorEndpoint;
             
+        }
+        else
+        {
+            //ロックオンしていない時は見えないようにカメラの真下に置く
+            Vector3 pos = _mcTransform.position;
+            pos.y -= 1f;
+            _rectTransform.position = pos;
         }
     }
 }

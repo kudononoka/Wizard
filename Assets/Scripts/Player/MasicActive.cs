@@ -25,11 +25,13 @@ public class MasicActive : MonoBehaviour
 
     }
 
-    private void OnDisable()
+    
+
+    private void OnDestroy()
     {
         _playerMasicAttack.MasicAction -= Active;
+        
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -39,8 +41,15 @@ public class MasicActive : MonoBehaviour
 
     void Active()
     {
-        _dir = _playerLookon.TargetPos.position - transform.position;
-        _moveSpeed = _playerMasicAttack.MasicObjectMoveSpeed;
+        if (_playerLookon.TargetPos != null)
+        {
+            _dir = _playerLookon.TargetPos.position - transform.position;
+            _moveSpeed = _playerMasicAttack.MasicObjectMoveSpeed;
+        }
+        else
+        {
+            Destroy(gameObject, 0.5f);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

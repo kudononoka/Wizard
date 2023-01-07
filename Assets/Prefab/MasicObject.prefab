@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6882861981158608165}
   m_Layer: 0
   m_Name: MasicObject
-  m_TagString: Untagged
+  m_TagString: PlayerMasicObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
