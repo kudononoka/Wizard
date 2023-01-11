@@ -71,6 +71,10 @@ public class PlayerLockon : MonoBehaviour
                     _goEnemise.RemoveAll(enemy => enemy == null);
                     if (_goEnemise.Count > 0)
                     {
+                        if(_index == _goEnemise.Count - 1)
+                        {
+                            _index = 0;
+                        }
                         _targetPos = _goEnemise[_index].GetComponent<Transform>();
                     }
                 }

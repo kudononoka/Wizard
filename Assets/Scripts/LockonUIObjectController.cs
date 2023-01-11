@@ -12,13 +12,16 @@ public class LockonUIObjectController : MonoBehaviour
     /// <summary>MainCameraからロックオンしているEnemyGOまでのベクトルを保管するための変数</summary>
     Vector3 _dir;
     /// <summary>MainCameraからロックオンしているEnemyGOまでのベクトルを保管するための変数</summary>
-    [SerializeField, Header("カメラとこのオブジェクト(LockonUICanvas)の距離調整用"), Tooltip("割合として使うため0～1に、1に近づくにつれこのオブジェクトがカメラから離れていく"), Range(0, 1f)] float _lockonUIdistance;
+    [SerializeField, Header("カメラとLockonUICanvasの距離調整用"), Tooltip("割合として使うため0～1に、1に近づくにつれこのオブジェクトがカメラから離れていく"), Range(0, 1f)] float _lockonUIdistance;
+
+    Image _lockonImage;
     // Start is called before the first frame update
     void Start()
     {
         _mcTransform = Camera.main.GetComponent<Transform>();
         _playerLockon = FindObjectOfType<PlayerLockon>();
         _rectTransform = GetComponent<RectTransform>();
+        _lockonImage = GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -27,6 +30,7 @@ public class LockonUIObjectController : MonoBehaviour
 
         if(_playerLockon.IsLockon)
         {
+            _lockonImage.enabled = true;
             //MainCameraからロックオンしているEnemyGOの向きを取得
             if (_playerLockon.TargetPos != null)
             {
@@ -47,10 +51,8 @@ public class LockonUIObjectController : MonoBehaviour
         }
         else
         {
-            //ロックオンしていない時は見えないようにカメラの真下に置く
-            Vector3 pos = _mcTransform.position;
-            pos.y -= 1f;
-            _rectTransform.position = pos;
+            //ロックオンしていない時は見えないようにする
+            _lockonImage.enabled = false;
         }
     }
 }

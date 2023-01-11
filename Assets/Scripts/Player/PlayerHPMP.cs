@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System;
 public class PlayerHPMP : MonoBehaviour
 {
     [SerializeField] Slider _sliderHp;
@@ -64,5 +64,14 @@ public class PlayerHPMP : MonoBehaviour
     public void MPRecovery(int amount)
     {
         _nowMp += amount;
+    }
+
+    /// <summary>現在のPlayerの状態管理用のenum・PlayerHPMPスクリプトに書くほうがいいのか</summary>
+    [Flags]
+    public enum PlayerState
+    {
+        Normal = 1 << 0,
+        Burn = 1 << 1,
+        Poison = 1 << 2,
     }
 }

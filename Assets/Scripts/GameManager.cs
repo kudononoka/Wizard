@@ -70,12 +70,5 @@ public class GameManager : MonoBehaviour
         GameClear = 3,
         Result = 4,
     }
-    /// <summary>現在のPlayerの状態管理用のenum・PlayerHPMPスクリプトに書くほうがいいのか</summary>
-    [Flags]
-    public enum PlayerState
-    {
-        Normal = 1 << 0,
-        Burn = 1 << 1,
-        Poison = 1 << 2,
-    }
+    
 }
