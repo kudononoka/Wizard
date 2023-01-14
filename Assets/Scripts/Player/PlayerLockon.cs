@@ -6,6 +6,7 @@ using Cinemachine;
 
 public class PlayerLockon : MonoBehaviour
 {
+    /// <summary>シーン内のEnemyObject</summary>
     [SerializeField]List<GameObject> _goEnemise = new List<GameObject>();
     int _index;
     [Tooltip("ロックオンした時の対象のゲームオブジェクト")]Transform _targetPos; public Transform TargetPos{get { return _targetPos; }set { _targetPos = value; }}
@@ -37,6 +38,8 @@ public class PlayerLockon : MonoBehaviour
                 AddListEnemy();
                 _virtualCamera.MoveToTopOfPrioritySubqueue();
                 _targetPos = _goEnemise[_index].GetComponent<Transform>();
+                _group.m_Targets[1].target = _targetPos;
+                _index++;
             }
             else
             {

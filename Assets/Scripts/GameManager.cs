@@ -60,15 +60,16 @@ public class GameManager : MonoBehaviour
 
     }
 
-
+    [Flags]
     /// <summary>Œ»İ‚ÌƒQ[ƒ€‚Ìó‘ÔŠÇ——p‚Ìenum</summary>
     public enum GameState
     {
-        Title = 0,
-        isGame = 1,
-        GameOver = 2,
-        GameClear = 3,
-        Result = 4,
+        Title = 1 << 0,
+        isGame = 1 << 1,
+        isButtle = 1 << 2,
+        GameOver = 1 << 3,
+        GameClear = 1 << 4,
+        Result = 1 << 5,
     }
     
 }

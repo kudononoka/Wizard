@@ -53,4 +53,11 @@ public class PlayerMasicAttack : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         _masicAction.Invoke();
     }
+
+    /// <summary>生成する魔法オブジェクトを変える関数</summary>
+    /// <param name="magicObject"></param>
+    public void MagicObjectChange(GameObject magicObject)
+    {
+        _masicObject = magicObject;
+    }
 }

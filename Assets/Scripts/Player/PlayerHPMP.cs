@@ -5,20 +5,21 @@ using UnityEngine.UI;
 using System;
 public class PlayerHPMP : MonoBehaviour
 {
+    public PlayerState _playerState = PlayerState.Normal;
     [SerializeField] Slider _sliderHp;
     int _nowHp;
     [SerializeField] int _maxHp;
-    int _nowMp;
-    [SerializeField] int _maxMp;
+    int _nowSp;
+    [SerializeField] int _maxSp;
 
     int _minHp = 0;
     [SerializeField, Header("葉っぱの枚数")] int _reafNum;
     
     GridLayoutGroup _gridLayoutGroup;
-    int _costMPAmount;
+    int _costSPAmount;
     public int ReafNum { get { return _reafNum; }}
 
-    public int CostMPAmount { get { return _costMPAmount; } }
+    public int CostSPAmount { get { return _costSPAmount; } }
     void Start()
     {
         _nowHp = _maxHp;
@@ -27,11 +28,15 @@ public class PlayerHPMP : MonoBehaviour
         _sliderHp.value = _nowHp;
         _gridLayoutGroup = GameObject.Find("MP").GetComponent<GridLayoutGroup>();
         _gridLayoutGroup.constraintCount = _reafNum;
-        _maxMp = _reafNum * 2;
-        _nowMp = _maxMp;
+        _maxSp = _reafNum * 2;
+        _nowSp = _maxSp;
     }
 
-    
+    private void Update()
+    {
+        
+    }
+
     /// <param name="damage">受けたダメージ数</param>
     public void HPDamage(int damage)
     {
@@ -55,15 +60,15 @@ public class PlayerHPMP : MonoBehaviour
     }
 
     /// <param name="amount">消費量</param>
-    public void MPConsumption(int amount)
+    public void SPConsumption(int amount)
     {
-        _costMPAmount = amount;
+        _costSPAmount = amount;
     }
 
     /// <param name="amount">回復量</param>
-    public void MPRecovery(int amount)
+    public void SPRecovery(int amount)
     {
-        _nowMp += amount;
+        _nowSp += amount;
     }
 
     /// <summary>現在のPlayerの状態管理用のenum・PlayerHPMPスクリプトに書くほうがいいのか</summary>

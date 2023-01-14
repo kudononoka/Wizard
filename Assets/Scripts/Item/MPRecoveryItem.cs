@@ -7,6 +7,6 @@ public class MPRecoveryItem : ItemBase
     [SerializeField] int _amount;
     public override void Action()
     {
-        FindObjectOfType<PlayerHPMP>().MPRecovery(_amount);
+        FindObjectOfType<PlayerHPMP>().SPRecovery(_amount);
     }
 }

@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - PlayerMasicObject
+  - Fire
+  - Ice
+  - Wind
+  - Thunder
   layers:
   - Default
   - TransparentFX

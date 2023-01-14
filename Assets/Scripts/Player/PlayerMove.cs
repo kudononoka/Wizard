@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour, InterfacePause
 {
     Rigidbody _rb;
+    Animator _anim;
     
     [Tooltip("歩行速度"), SerializeField] float _walkSpeed;
     
@@ -14,7 +15,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
    
     [Tooltip("回避速度"), SerializeField] float _avoidanceSpeed;
 
-    [Tooltip("Shieldとなるコライダー"),SerializeField] MeshCollider shield;
+    
 
     [SerializeField] Transform _afterAvoidancePos;
 
@@ -40,6 +41,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _anim = GetComponent<Animator>();
         _mainCamera = Camera.main.gameObject;
         _groundJudgment = GetComponent<GroundJudgment>();
     }
@@ -54,7 +56,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
         {
             //カメラのy軸のオイラー角を取得
             Quaternion _mainCamaraforward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
-            _rb.velocity = _mainCamaraforward.normalized * new Vector3(x * _walkSpeed, 0, -z * _walkSpeed);
+            _rb.velocity = _mainCamaraforward.normalized * new Vector3(x * _walkSpeed, 0, z * _walkSpeed);
 
             if (_rb.velocity != Vector3.zero)
             {
@@ -69,29 +71,18 @@ public class PlayerMove : MonoBehaviour, InterfacePause
                 _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
             }
 
-            if(Input.GetButton("Shield"))
-            {
-                shield.enabled = true;
-            }
-            else
-            {
-                shield.enabled = false; 
-            }
+            
             
             if(Input.GetButton("AvoidanceController"))
             {
                 if (_ispos)
                 {
-                   // _spos = transform.position;
-                    //_dir = transform.forward;
+                   
                     _savePos = _afterAvoidancePos.position;
                     _ispos = false;
 
                 }
-                //if (Vector3.Distance(transform.position, _spos) < 4)
-                //{
-                //    _rb.velocity *= 4;
-                //}
+                
                 transform.position = Vector3.MoveTowards(transform.position, _savePos, _avoidanceSpeed * Time.deltaTime);
             }
             else
@@ -103,6 +94,8 @@ public class PlayerMove : MonoBehaviour, InterfacePause
         {
             _rb.AddForce(Vector3.down * _gravity);
         }
+
+        _anim.SetFloat("walk", _rb.velocity.magnitude);
     }
 
     void InterfacePause.Pause()
