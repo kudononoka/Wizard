@@ -11,6 +11,7 @@ public class Boss : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+                            
     }
 
     // Update is called once per frame
