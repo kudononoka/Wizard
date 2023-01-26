@@ -17,8 +17,8 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _skillPanelRectTrans = ListAdd(_skillButtons, _skillPanel, _skillPanelRectTrans, _panelOffScale);
-        _attributePanelRectTrans = ListAdd(_attributeButtons, _attributePanel, _attributePanelRectTrans, _panelOffScale);
+        _skillPanelRectTrans = ListAddAndPanelScaleControll(_skillButtons, _skillPanel, _skillPanelRectTrans, _panelOffScale);
+        _attributePanelRectTrans = ListAddAndPanelScaleControll(_attributeButtons, _attributePanel, _attributePanelRectTrans, _panelOffScale);
     }
 
     // Update is called once per frame
@@ -26,7 +26,6 @@ public class UIManager : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.C))
         {
-            Debug.Log("a");
             ButtonInteractable(_skillButtons, _skillPanelRectTrans, _panelOnScale, true);
         }
         else
@@ -36,7 +35,6 @@ public class UIManager : MonoBehaviour
 
         if (Input.GetKey(KeyCode.C))
         {
-            Debug.Log("a");
             ButtonInteractable(_attributeButtons, _attributePanelRectTrans, _panelOnScale, true);
         }
         else
@@ -44,7 +42,13 @@ public class UIManager : MonoBehaviour
             ButtonInteractable(_attributeButtons, _attributePanelRectTrans, _panelOffScale, true);
         }
     }
-
+    /// <summary>
+    /// ButtonコンポーネントのInteractable
+    /// </summary>
+    /// <param name="buttons">Panelゲームオブジェクトの子オブジェクトについているButtonの配列</param>
+    /// <param name="rect">RectTransformコンポーネント</param>
+    /// <param name="panelScale">PanelのScaleを変えるための変数</param>
+    /// <param name="trueORfalse"></param>
     void ButtonInteractable(List<Button> buttons, RectTransform rect, Vector3 panelScale,  bool trueORfalse)
     {
         rect.localScale = panelScale;
@@ -54,7 +58,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    RectTransform ListAdd(List<Button> buttons, GameObject panel, RectTransform rect, Vector3 panelScale)
+    RectTransform ListAddAndPanelScaleControll(List<Button> buttons, GameObject panel, RectTransform rect, Vector3 panelScale)
     {
         rect = panel.GetComponent<RectTransform>();
         rect.localScale = panelScale;

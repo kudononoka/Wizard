@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(GroundJudgment))]
+
 public class PlayerMove : MonoBehaviour, InterfacePause
 {
     Rigidbody _rb;
@@ -36,8 +39,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
     GroundJudgment _groundJudgment;
     
     bool _ispos;
-    Vector3 _spos;
-    Vector3 _dir;
+    
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -52,42 +54,23 @@ public class PlayerMove : MonoBehaviour, InterfacePause
         float x = _isController ? Input.GetAxisRaw("HorizontalController") : Input.GetAxisRaw("Horizontal");
         float z = _isController ? Input.GetAxisRaw("VerticalController") : Input.GetAxisRaw("Vertical");
 
+        
+            //カメラのy軸のオイラー角を取得
+        Quaternion _mainCamaraforward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
+        _rb.velocity = _mainCamaraforward.normalized * new Vector3(x * _walkSpeed, 0, z * _walkSpeed);
+
+        if (_rb.velocity != Vector3.zero)
+        {
+            _foward = Quaternion.LookRotation(_rb.velocity, Vector3.up);
+        }
+
+        //滑らかに回転させる
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, _foward, _rotateSpeed * Time.deltaTime);
         if (_groundJudgment.IsGround)
         {
-            //カメラのy軸のオイラー角を取得
-            Quaternion _mainCamaraforward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
-            _rb.velocity = _mainCamaraforward.normalized * new Vector3(x * _walkSpeed, 0, z * _walkSpeed);
-
-            if (_rb.velocity != Vector3.zero)
-            {
-                _foward = Quaternion.LookRotation(_rb.velocity, Vector3.up);
-            }
-
-            //滑らかに回転させる
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, _foward, _rotateSpeed * Time.deltaTime);
-
-            if(Input.GetButtonDown("JumpController"))
+            if (Input.GetButtonDown("JumpController"))
             {
                 _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
-            }
-
-            
-            
-            if(Input.GetButton("AvoidanceController"))
-            {
-                if (_ispos)
-                {
-                   
-                    _savePos = _afterAvoidancePos.position;
-                    _ispos = false;
-
-                }
-                
-                transform.position = Vector3.MoveTowards(transform.position, _savePos, _avoidanceSpeed * Time.deltaTime);
-            }
-            else
-            {
-                _ispos = true;
             }
         }
         else
@@ -95,7 +78,30 @@ public class PlayerMove : MonoBehaviour, InterfacePause
             _rb.AddForce(Vector3.down * _gravity);
         }
 
-        _anim.SetFloat("walk", _rb.velocity.magnitude);
+
+
+        if (Input.GetButton("AvoidanceController"))
+        {
+            if (_ispos)
+            {
+                   
+                _savePos = _afterAvoidancePos.position;
+                _ispos = false;
+
+            }
+                
+            transform.position = Vector3.MoveTowards(transform.position, _savePos, _avoidanceSpeed * Time.deltaTime);
+        }
+        else
+        {
+            _ispos = true;
+        }
+        
+
+        if (_anim != null)
+        {
+            _anim.SetFloat("walk", _rb.velocity.magnitude);
+        }
     }
 
     void InterfacePause.Pause()

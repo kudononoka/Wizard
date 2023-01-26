@@ -11,7 +11,7 @@ public class GroundJudgment : MonoBehaviour
     /// <summary>接地判定を行うためのレイヤーです</summary>
     [Header("地面とみなすオブジェクトのレイヤー"), SerializeField] LayerMask layerMask;
     /// <summary>rayの長さ</summary>
-    float rayLength = 1.1f;
+    [SerializeField, Header("rayの長さ")]float rayLength = 1.1f;
     // Start is called before the first frame update
     void Start()
     {
