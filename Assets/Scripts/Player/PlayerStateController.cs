@@ -43,4 +43,6 @@ public class PlayerStateController : MonoBehaviour
         /// <summary>—‹‘®«</summary>
         Thunder,
     }
+
+    
 }
