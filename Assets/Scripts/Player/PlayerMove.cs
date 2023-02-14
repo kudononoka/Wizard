@@ -18,7 +18,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
    
     [Tooltip("回避速度"), SerializeField] float _avoidanceSpeed;
 
-    
+    [Tooltip("shieldとなるオブジェクト"), SerializeField] GameObject _shield;
 
     [SerializeField] Transform _afterAvoidancePos;
 
@@ -82,10 +82,11 @@ public class PlayerMove : MonoBehaviour, InterfacePause
         if(Input.GetKey(KeyCode.G))
         {
             _anim.SetBool("gard", true);
-            _rb.velocity = Vector3.zero;
+            _shield.SetActive(true);
         }
         else
         {
+            _shield.SetActive(false);
             _anim.SetBool("gard", false);
         }
 
