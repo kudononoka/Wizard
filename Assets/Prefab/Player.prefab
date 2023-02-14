@@ -200,8 +200,8 @@ GameObject:
   - component: {fileID: 2030534177542271505}
   - component: {fileID: 1992650896205037702}
   - component: {fileID: 1992650896205037703}
-  - component: {fileID: 1686097503990196394}
   - component: {fileID: 1686097503990196391}
+  - component: {fileID: 702804128}
   - component: {fileID: 1686097503990196392}
   - component: {fileID: 1686097503990196393}
   - component: {fileID: 1686097503990196390}
@@ -268,7 +268,26 @@ CapsuleCollider:
   m_Height: 1.0244355
   m_Direction: 1
   m_Center: {x: -0.008145168, y: 0.50811505, z: 0}
---- !u!95 &1686097503990196394
+--- !u!114 &1686097503990196391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686097503990196395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa23de6ea8fcf4940b99fb149ef48037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _walkSpeed: 3
+  _rotateSpeed: 400
+  _jumpPower: 2
+  _avoidanceSpeed: 20
+  _afterAvoidancePos: {fileID: 1992650897212761327}
+  _isController: 0
+  _gravity: 2
+--- !u!95 &702804128
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -288,25 +307,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1686097503990196391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1686097503990196395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa23de6ea8fcf4940b99fb149ef48037, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _walkSpeed: 2
-  _rotateSpeed: 400
-  _jumpPower: 2
-  _avoidanceSpeed: 20
-  _afterAvoidancePos: {fileID: 1992650897212761327}
-  _isController: 0
-  _gravity: 2
 --- !u!114 &1686097503990196392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,6 +322,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
+  rayLength: 1.1
 --- !u!114 &1686097503990196393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,7 +330,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686097503990196395}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e53d0ec198e5d92478d60eace5262dbb, type: 3}
   m_Name: 
@@ -347,7 +348,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686097503990196395}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e7b8fccaad9f084aab2d4f24521d06d, type: 3}
   m_Name: 
@@ -562,7 +563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1992650896125084646
 Transform:
   m_ObjectHideFlags: 0

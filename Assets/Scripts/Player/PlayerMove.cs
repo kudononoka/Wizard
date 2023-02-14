@@ -63,6 +63,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
         {
             _foward = Quaternion.LookRotation(_rb.velocity, Vector3.up);
         }
+        _anim.SetFloat("Walk", _rb.velocity.magnitude);
 
         //滑らかに回転させる
         transform.rotation = Quaternion.RotateTowards(transform.rotation, _foward, _rotateSpeed * Time.deltaTime);
@@ -78,32 +79,60 @@ public class PlayerMove : MonoBehaviour, InterfacePause
             _rb.AddForce(Vector3.down * _gravity);
         }
 
+        if(Input.GetKey(KeyCode.G))
+        {
+            _anim.SetBool("gard", true);
+            _rb.velocity = Vector3.zero;
+        }
+        else
+        {
+            _anim.SetBool("gard", false);
+        }
 
-
-        if (Input.GetButton("AvoidanceController"))
+        if (Input.GetButton("AvoidanceController") || Input.GetKeyDown(KeyCode.V))
         {
             if (_ispos)
             {
-                   
                 _savePos = _afterAvoidancePos.position;
                 _ispos = false;
-
             }
-                
-            transform.position = Vector3.MoveTowards(transform.position, _savePos, _avoidanceSpeed * Time.deltaTime);
+            //_anim.SetBool("avoid", true);
+            //transform.position = Vector3.MoveTowards(transform.position, _savePos, _avoidanceSpeed * Time.deltaTime);
+            //if (transform.position == _savePos)
+            //{
+            //    _anim.SetBool("avoid", false);
+            //}
+
+            _anim.SetTrigger("Avoid");
+
+
+
+            //StartCoroutine(Avoid());    
         }
         else
         {
             _ispos = true;
         }
         
-
-        if (_anim != null)
+        Debug.Log(_rb.velocity.magnitude);
+        
+        
+        if(_anim.GetCurrentAnimatorStateInfo(0).IsName("Avoid"))
         {
-            _anim.SetFloat("walk", _rb.velocity.magnitude);
+            transform.position = Vector3.MoveTowards(transform.position, _savePos, _avoidanceSpeed * Time.deltaTime);
         }
+
+        
     }
 
+    //IEnumerator Avoid()
+    //{
+
+    //    _anim.SetBool("avoid", true);
+    //    transform.position = Vector3.MoveTowards(transform.position, _savePos, _avoidanceSpeed * Time.deltaTime);
+    //    yield return new WaitForSeconds(2);
+    //    _anim.SetBool("avoid", false);
+    //}
     void InterfacePause.Pause()
     {
         _walkSpeed = 0;
