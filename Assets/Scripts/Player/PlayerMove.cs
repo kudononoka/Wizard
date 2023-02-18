@@ -82,10 +82,12 @@ public class PlayerMove : MonoBehaviour, InterfacePause
         if(Input.GetKey(KeyCode.G))
         {
             _anim.SetBool("gard", true);
+            _rb.Sleep();
             _shield.SetActive(true);
         }
         else
         {
+            _rb.WakeUp();
             _shield.SetActive(false);
             _anim.SetBool("gard", false);
         }
@@ -115,7 +117,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
             _ispos = true;
         }
         
-        Debug.Log(_rb.velocity.magnitude);
+        
         
         
         if(_anim.GetCurrentAnimatorStateInfo(0).IsName("Avoid"))
