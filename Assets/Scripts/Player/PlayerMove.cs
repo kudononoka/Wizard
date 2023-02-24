@@ -99,18 +99,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
                 _savePos = _afterAvoidancePos.position;
                 _ispos = false;
             }
-            //_anim.SetBool("avoid", true);
-            //transform.position = Vector3.MoveTowards(transform.position, _savePos, _avoidanceSpeed * Time.deltaTime);
-            //if (transform.position == _savePos)
-            //{
-            //    _anim.SetBool("avoid", false);
-            //}
-
             _anim.SetTrigger("Avoid");
-
-
-
-            //StartCoroutine(Avoid());    
         }
         else
         {
@@ -128,14 +117,6 @@ public class PlayerMove : MonoBehaviour, InterfacePause
         
     }
 
-    //IEnumerator Avoid()
-    //{
-
-    //    _anim.SetBool("avoid", true);
-    //    transform.position = Vector3.MoveTowards(transform.position, _savePos, _avoidanceSpeed * Time.deltaTime);
-    //    yield return new WaitForSeconds(2);
-    //    _anim.SetBool("avoid", false);
-    //}
     void InterfacePause.Pause()
     {
         _walkSpeed = 0;
@@ -144,6 +125,4 @@ public class PlayerMove : MonoBehaviour, InterfacePause
     {
         _walkSpeed = 10;
     }
-
-    
 }
