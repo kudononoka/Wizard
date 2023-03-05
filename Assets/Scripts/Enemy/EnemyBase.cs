@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>Enemyの基底クラスです </summary>
 public class EnemyBase : MonoBehaviour
 {
-    int _nowHp;
+    protected int _nowHp;
     [SerializeField] int _maxHp;
     PlayerLockon _lockon;
     /// <summary>Playerの近接攻撃からダメージを受けた場合のPlayerのMP回復量</summary>
