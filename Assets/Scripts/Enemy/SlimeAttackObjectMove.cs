@@ -10,13 +10,15 @@ public class SlimeAttackObjectMove : MonoBehaviour
     Rigidbody _rb;
     /// <summary>Ëo‚ÌŠp“x</summary>
     [SerializeField,Header("Ëo‚ÌŠp“x")] float _angle;
+    /// <summary>UŒ‚—Í</summary>
+    [SerializeField, Header("UŒ‚—Í")] int _attackPower;
+    
     // Start is called before the first frame update
     void Start()
     {
         _targetPos = GameObject.FindWithTag("Player").GetComponent<Transform>().position;
         _rb = GetComponent<Rigidbody>();
         Move();
-        
     }
 
     // Update is called once per frame
@@ -45,7 +47,18 @@ public class SlimeAttackObjectMove : MonoBehaviour
         float speed = Mathf.Sqrt(Physics.gravity.y * Mathf.Pow(disX, 2) / ((y - disX * Mathf.Tan(rad)) * 2 * Mathf.Pow(Mathf.Cos(rad), 2)));
         
         return new Vector3(targetPos.x - thisPos.x, disX * Mathf.Tan(rad), targetPos.z - thisPos.z).normalized * speed;
-        
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<PlayerHPMP>().HPDamage(_attackPower);
+            Destroy(this.gameObject);
+        }
+        else if (other.gameObject.CompareTag("Ground"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

@@ -9,6 +9,8 @@ public class MasicActive : MonoBehaviour
     Vector3 _dir;
     Rigidbody _rb;
     float _moveSpeed;
+    [SerializeField, Header("UŒ‚—Í")] float _attackPower;
+    [SerializeField, Header("—L—˜‚Æ‚È‚é‘Šè‚Ì‘®«")] GoAttribute _goAttribute;
     // Start is called before the first frame update
     void Awake()
     {
@@ -56,7 +58,29 @@ public class MasicActive : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Enemy"))
         {
+            EnemyBase enemyBase = other.gameObject.GetComponent<EnemyBase>();
+            if((int)enemyBase._attribute == (int)_goAttribute)
+            {
+                enemyBase.Damage((int)(_attackPower * 1.3f));
+            }
+            else
+            {
+                enemyBase.Damage((int)_attackPower);
+            }
+            
+            if (enemyBase != null)
+            {
+                enemyBase.SliderControlle();
+            }
             Destroy(gameObject);
         }
+    }
+
+    public enum GoAttribute
+    {
+        Fire = 1,
+        Ice = 2,
+        Wind = 3,
+        Thunder = 4,
     }
 }
