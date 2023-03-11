@@ -13,29 +13,57 @@ public class UIManager : MonoBehaviour
     [SerializeField, Header("Panelを非表示にするときのPanelサイズ")] Vector3 _panelOffScale;
     List<Button> _skillButtons = new List<Button>();
     List<Button> _attributeButtons = new List<Button>();
-    
+    [SerializeField] Button[] _selectButton;
+    [SerializeField] Sprite[] _attributeImage;
+    [SerializeField] GameObject _playerattribute;
     // Start is called before the first frame update
     void Start()
     {
-        _skillPanelRectTrans = ListAddAndPanelScaleControll(_skillButtons, _skillPanel, _skillPanelRectTrans, _panelOffScale);
+        //_skillPanelRectTrans = ListAddAndPanelScaleControll(_skillButtons, _skillPanel, _skillPanelRectTrans, _panelOffScale);
         _attributePanelRectTrans = ListAddAndPanelScaleControll(_attributeButtons, _attributePanel, _attributePanelRectTrans, _panelOffScale);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.C))
-        {
-            ButtonInteractable(_skillButtons, _skillPanelRectTrans, _panelOnScale, true);
-        }
-        else
-        {
-            ButtonInteractable(_skillButtons, _skillPanelRectTrans, _panelOffScale, true);
-        }
+        //if(Input.GetKey(KeyCode.C))
+        //{
+        //    ButtonInteractable(_skillButtons, _skillPanelRectTrans, _panelOnScale, true);
+        //}
+        //else
+        //{
+        //    ButtonInteractable(_skillButtons, _skillPanelRectTrans, _panelOffScale, true);
+        //}
 
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetButton("UIActive"))
         {
             ButtonInteractable(_attributeButtons, _attributePanelRectTrans, _panelOnScale, true);
+            Sprite image = _playerattribute.GetComponent<Image>().sprite;
+            if(Input.GetAxisRaw("MasicChangeHorizontal") == 1)
+            {
+                _selectButton[2].onClick.Invoke();
+                image = _attributeImage[2];
+                Debug.Log("風");
+            }
+            else if(Input.GetAxisRaw("MasicChangeHorizontal") == -1)
+            {
+                _selectButton[3].onClick.Invoke();
+                image = _attributeImage[3];
+                Debug.Log("雷");
+            }
+            else if(Input.GetAxisRaw("MasicChangeVertical") == 1)
+            {
+                _selectButton[0].onClick.Invoke();
+                image = _attributeImage[0];
+                Debug.Log("火");
+            }
+            else if (Input.GetAxisRaw("MasicChangeVertical") == -1)
+            {
+                Debug.Log("氷");
+                _selectButton[1].onClick.Invoke();
+                image = _attributeImage[1];
+            }
+            _playerattribute.GetComponent<Image>().sprite = image;
         }
         else
         {

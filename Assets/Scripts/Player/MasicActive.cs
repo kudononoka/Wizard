@@ -37,7 +37,6 @@ public class MasicActive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         _rb.velocity = _dir * _moveSpeed;
     }
 
@@ -45,7 +44,9 @@ public class MasicActive : MonoBehaviour
     {
         if (_playerLookon.TargetPos != null)
         {
-            _dir = _playerLookon.TargetPos.position - transform.position;
+            Vector3 pos = _playerLookon.TargetPos.position;
+            pos.y += 0.5f;
+            _dir = pos - transform.position;
             _moveSpeed = _playerMasicAttack.MasicObjectMoveSpeed;
         }
         else
@@ -58,6 +59,7 @@ public class MasicActive : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log("“–‚½‚Á‚½");
             EnemyBase enemyBase = other.gameObject.GetComponent<EnemyBase>();
             if((int)enemyBase._attribute == (int)_goAttribute)
             {
@@ -68,11 +70,11 @@ public class MasicActive : MonoBehaviour
                 enemyBase.Damage((int)_attackPower);
             }
             
-            if (enemyBase != null)
+            if (enemyBase != null && enemyBase._isBoss)
             {
                 enemyBase.SliderControlle();
             }
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 

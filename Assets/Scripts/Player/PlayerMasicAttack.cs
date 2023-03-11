@@ -37,9 +37,9 @@ public class PlayerMasicAttack : MonoBehaviour
         {
             _nowMasicGOActive.RemoveAll(go => go == null);
         }
-        if(Input.GetKeyDown(KeyCode.Z) && _lockon.IsLockon && _nowMasicGOActive.Count == 0)
+        if(Input.GetButtonDown("Attack") && _lockon.IsLockon && _nowMasicGOActive.Count == 0)
         {
-            StartCoroutine(MasicAttack());
+            //StartCoroutine(MasicAttack());
         }
     }
 

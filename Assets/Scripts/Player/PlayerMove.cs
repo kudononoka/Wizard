@@ -57,16 +57,19 @@ public class PlayerMove : MonoBehaviour, InterfacePause
         
             //カメラのy軸のオイラー角を取得
         Quaternion _mainCamaraforward = Quaternion.AngleAxis(_mainCamera.transform.eulerAngles.y, Vector3.up);
-        _rb.velocity = _mainCamaraforward.normalized * new Vector3(x * _walkSpeed, 0, z * _walkSpeed);
+        _rb.velocity = _mainCamaraforward * new Vector3(x * _walkSpeed, 0, -z * _walkSpeed);
 
         if (_rb.velocity != Vector3.zero)
         {
-            _foward = Quaternion.LookRotation(_rb.velocity, Vector3.up);
+            _foward = Quaternion.LookRotation(_rb.velocity);
         }
         _anim.SetFloat("Walk", _rb.velocity.magnitude);
-
+        if(_rb.velocity != Vector3.zero)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, _foward, _rotateSpeed * Time.deltaTime);
+        }
         //滑らかに回転させる
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, _foward, _rotateSpeed * Time.deltaTime);
+        
         if (_groundJudgment.IsGround)
         {
             if (Input.GetButtonDown("JumpController"))
@@ -79,7 +82,7 @@ public class PlayerMove : MonoBehaviour, InterfacePause
             _rb.AddForce(Vector3.down * _gravity);
         }
 
-        if(Input.GetKey(KeyCode.G))
+        if (Input.GetButton("Shield"))
         {
             _anim.SetBool("gard", true);
             _rb.Sleep();
@@ -91,20 +94,28 @@ public class PlayerMove : MonoBehaviour, InterfacePause
             _shield.SetActive(false);
             _anim.SetBool("gard", false);
         }
+        
+        
+        if (Input.GetButtonDown("Attack"))
+        {
+            _anim.SetTrigger("attack");
+        }
+        
 
-        if (Input.GetButton("AvoidanceController") || Input.GetKeyDown(KeyCode.V))
-        {
-            if (_ispos)
-            {
-                _savePos = _afterAvoidancePos.position;
-                _ispos = false;
-            }
-            _anim.SetTrigger("Avoid");
-        }
-        else
-        {
-            _ispos = true;
-        }
+        
+        //if (Input.GetButton("AvoidanceController") || Input.GetKeyDown(KeyCode.V))
+        //{
+        //    if (_ispos)
+        //    {
+        //        _savePos = _afterAvoidancePos.position;
+        //        _ispos = false;
+        //    }
+        //    _anim.SetTrigger("Avoid");
+        //}
+        //else
+        //{
+        //    _ispos = true;
+        //}
         
         
         

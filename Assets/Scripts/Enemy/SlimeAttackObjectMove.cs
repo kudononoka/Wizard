@@ -51,6 +51,10 @@ public class SlimeAttackObjectMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Shield"))
+        {
+            Destroy(this.gameObject);
+        }
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerHPMP>().HPDamage(_attackPower);
@@ -60,5 +64,6 @@ public class SlimeAttackObjectMove : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        
     }
 }

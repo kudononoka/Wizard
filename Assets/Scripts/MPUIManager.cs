@@ -20,13 +20,12 @@ public class MPUIManager : MonoBehaviour
     [SerializeField, Tooltip("今使用できるMP(葉っぱ)のUIList")] List<Image> _usebleMPLeaf = new List<Image>();
     ///<summary>このListは葉っぱ一枚のMPが0になったとしてもListにあり続けます</summary>
     [SerializeField, Tooltip("生成した全ての葉っぱUIの保管場所")] List<Image> _MPLeaf = new List<Image>();
-    PlayerHPMP _playerHPMP;
+    [SerializeField]PlayerHPMP _playerHPMP;
     GridLayoutGroup _group;
     RectTransform _rectTransform;
     int _reafNum;
     void Start()
     {
-        _playerHPMP = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHPMP>();
         _group = GetComponent<GridLayoutGroup>();
         _rectTransform = GetComponent<RectTransform>();
         _reafNum = _playerHPMP.ReafNum;

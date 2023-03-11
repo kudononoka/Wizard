@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
-            SceneManager.sceneLoaded += SceneLoad;
+            //ChangeSceneManager.sceneLoaded += SceneLoad;
             DontDestroyOnLoad(this.gameObject);
         }
     }

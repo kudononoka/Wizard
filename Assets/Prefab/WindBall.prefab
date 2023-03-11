@@ -4889,7 +4889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afed501e6aa979540a27edfa28a762f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackPower: 0
+  _attackPower: 10
   _goAttribute: 4
 --- !u!1 &6588725176492725440
 GameObject:

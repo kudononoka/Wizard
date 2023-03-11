@@ -34,7 +34,10 @@ public class LockonUIObjectController : MonoBehaviour
             //MainCameraからロックオンしているEnemyGOの向きを取得
             if (_playerLockon.TargetPos != null)
             {
-                _dir = _playerLockon.TargetPos.position - _mcTransform.position;
+                Vector3 pos = _playerLockon.TargetPos.position;
+                pos.y += 0.03f;
+                
+                _dir = pos - _mcTransform.position;
             }
 
             //このゲームオブジェクトのCanvasをカメラ方向に向ける

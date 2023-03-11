@@ -8,13 +8,12 @@ public class Slime : EnemyBase
     [Tooltip("playerの位置")] Transform _playerTra;
     [Tooltip("NormalAttackの時のPlayerとの距離")] float _isAttackDistance;
     [SerializeField, Tooltip("戦闘時のPlayerとの最高距離")] float _isBattleDistance;
-    [Tooltip("戦闘中かどうか・Trueだったら戦闘している")] bool _isBattle = false;
     [Tooltip("戦闘中の攻撃するための時間管理用")] float _attackTimer;
     [SerializeField,Tooltip("戦闘中の攻撃開始時間")] float _attackTime;
     [SerializeField, Header("攻撃用のオブジェクトPrefab")] GameObject _attackGOPrefab;
     NavMeshAgent _agent;
     Animator _anim;
-    State state;
+    [SerializeField]public State state;
     float dis;
 
     /// SlimeBossのための攻撃Intervaltime用の変数
@@ -22,7 +21,7 @@ public class Slime : EnemyBase
     float _slimeInstanceTimer;
     [SerializeField, Header("slimePrefab")] GameObject _slimePrefab;
     [SerializeField, Header("slime生成場所")] Transform[] _spawnPoint;
-    
+    [SerializeField] PlayerLockon _lockon;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +38,7 @@ public class Slime : EnemyBase
     {
         dis = Vector3.Distance(_playerTra.position, this.transform.position);
         //Playerが戦闘範囲内に入ったら
-        if(_isBattleDistance >= dis)
+        if(dis <= _isBattleDistance)
         {
             //戦闘状態にする
             state = State.IsBattle;
@@ -73,7 +72,6 @@ public class Slime : EnemyBase
                         if (attackPattern <= 2)
                         {
                             _anim.SetTrigger("BossAttack");
-                            
                             _slimeInstanceTimer = 0;
                         }
                         else
@@ -87,9 +85,6 @@ public class Slime : EnemyBase
                 {
                     Attack();
                 }
-                
-                
-
                 break;
             //死状態だったら
             case State.Deth:
@@ -108,7 +103,7 @@ public class Slime : EnemyBase
     }
 
     /// <summary>今の状態管理用のenum</summary>
-    enum State
+    public enum State
     {
         /// <summary>普通の状態</summary>
         Normal,

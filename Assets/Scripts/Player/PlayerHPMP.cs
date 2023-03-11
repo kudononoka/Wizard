@@ -17,7 +17,7 @@ public class PlayerHPMP : MonoBehaviour
     
     GridLayoutGroup _gridLayoutGroup;
     int _costSPAmount;
-    public int ReafNum { get { return _reafNum; }}
+    public int ReafNum => _reafNum;
 
     public int CostSPAmount { get { return _costSPAmount; } }
     void Start()
@@ -44,7 +44,8 @@ public class PlayerHPMP : MonoBehaviour
         _sliderHp.value = _nowHp;
         if (_nowHp < _minHp)
         {
-
+            ChangeSceneManager changeScene = GameObject.Find("SceneManager").GetComponent<ChangeSceneManager>();
+            changeScene.ChangeScene("GameOver");
         }
     }
 

@@ -12,7 +12,7 @@ public class SceneSwitcher : MonoBehaviour
     {
         GameManager.Instance.StartPointName = arrivalPoint;
         GameManager.Instance.StartPlayerDir = dir;
-        SceneManager.LoadScene(sceneName);
+        //ChangeSceneManager.LoadScene(sceneName);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,6 +25,6 @@ public class SceneSwitcher : MonoBehaviour
 
     public void NormalSceneMove()
     {
-        SceneManager.LoadScene(_sceneName);
+        //ChangeSceneManager.LoadScene(_sceneName);
     }
 }

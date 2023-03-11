@@ -29,17 +29,16 @@ public class PlayerLockon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetButtonDown("Lockon"))
         {
-            Debug.Log("ÉçÉbÉNÉIÉì");
             _isLockon = !_isLockon;
             if (_isLockon)
             {
+                _index = 0;
                 AddListEnemy();
                 _virtualCamera.MoveToTopOfPrioritySubqueue();
                 _targetPos = _goEnemise[_index].GetComponent<Transform>();
                 _group.m_Targets[1].target = _targetPos;
-                _index++;
             }
             else
             {
@@ -47,13 +46,11 @@ public class PlayerLockon : MonoBehaviour
                 _goEnemise.Clear();
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space) && _isLockon)
+        if (Input.GetButtonDown("Lockon") && _isLockon)
         { 
             _targetPos = _goEnemise[_index].GetComponent<Transform>(); 
             _group.m_Targets[1].target = _targetPos;
-
             _index++;
-
             if (_index >= _goEnemise.Count)
             {
                 _index = 0;
@@ -74,10 +71,7 @@ public class PlayerLockon : MonoBehaviour
                     _goEnemise.RemoveAll(enemy => enemy == null);
                     if (_goEnemise.Count > 0)
                     {
-                        if(_index == _goEnemise.Count - 1)
-                        {
-                            _index = 0;
-                        }
+                        _index = _goEnemise.Count - 1;
                         _targetPos = _goEnemise[_index].GetComponent<Transform>();
                     }
                 }
@@ -91,9 +85,9 @@ public class PlayerLockon : MonoBehaviour
         }
     }
 
-    void AddListEnemy()
+    public void AddListEnemy()
     {
         var goEnemise = GameObject.FindGameObjectsWithTag("Enemy");
-        _goEnemise = goEnemise.OrderBy(enemy => Vector3.Distance(this.transform.position, enemy.transform.position)).ToList();
+        _goEnemise = goEnemise.Where(enemy => enemy.GetComponent<Slime>().state == Slime.State.IsBattle).OrderBy(enemy => Vector3.Distance(this.transform.position, enemy.transform.position)).ToList();
     }
 }

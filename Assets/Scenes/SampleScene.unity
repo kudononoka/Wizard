@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.041120112, g: 0.07249693, b: 0.1256583, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -394,7 +394,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258484517}
-  m_LocalRotation: {x: 0.018009435, y: 0.0033376457, z: -0.000060119182, w: 0.9998323}
+  m_LocalRotation: {x: 0.018009435, y: 0.0033376801, z: -0.000060119804, w: 0.9998323}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -504,7 +504,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307191461}
-  m_LocalRotation: {x: 0.07166975, y: 0.0033296128, z: -0.00023924907, w: 0.9974229}
+  m_LocalRotation: {x: 0.071669735, y: 0.0033295925, z: -0.00023924754, w: 0.9974229}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -542,6 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5087562c3656746a22865bad6e5ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pauseCanvas: {fileID: 0}
 --- !u!4 &383357965
 Transform:
   m_ObjectHideFlags: 0
@@ -874,6 +875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5087562c3656746a22865bad6e5ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pauseCanvas: {fileID: 0}
 --- !u!4 &652897703
 Transform:
   m_ObjectHideFlags: 0
@@ -1564,7 +1566,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.07166976, y: 0.00332961, z: -0.00023924888, w: 0.9974229}
+  m_LocalRotation: {x: 0.07166974, y: 0.003329593, z: -0.00023924763, w: 0.9974229}
   m_LocalPosition: {x: 0.704984, y: 3.00948, z: -13.003584}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2004,7 +2006,9 @@ MonoBehaviour:
   _rotateSpeed: 600
   _jumpPower: 70
   _avoidanceSpeed: 100
-  shield: {fileID: 676862488}
+  _shield: {fileID: 676862486}
+  _afterAvoidancePos: {fileID: 818212486}
+  _isController: 0
   _gravity: 2
 --- !u!54 &1071740354
 Rigidbody:
@@ -2118,6 +2122,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
+  rayLength: 1.1
 --- !u!114 &1071740360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2130,9 +2135,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fee8d4e78c6fca74fbc38713f60d1872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerState: 1
   _sliderHp: {fileID: 1628158039}
   _maxHp: 100
-  _maxMp: 0
+  _maxSp: 0
   _reafNum: 10
 --- !u!1 &1100886202
 GameObject:
@@ -2163,6 +2169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5087562c3656746a22865bad6e5ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pauseCanvas: {fileID: 0}
 --- !u!4 &1100886204
 Transform:
   m_ObjectHideFlags: 0
@@ -2207,6 +2214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5087562c3656746a22865bad6e5ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pauseCanvas: {fileID: 0}
 --- !u!4 &1233538774
 Transform:
   m_ObjectHideFlags: 0
@@ -2360,6 +2368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5087562c3656746a22865bad6e5ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pauseCanvas: {fileID: 0}
 --- !u!4 &1663779890
 Transform:
   m_ObjectHideFlags: 0
@@ -2508,7 +2517,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964706288}
-  m_LocalRotation: {x: 0.114669465, y: 0.0033161554, z: -0.00038278883, w: 0.99339813}
+  m_LocalRotation: {x: 0.11466948, y: 0.0033161845, z: -0.00038279226, w: 0.99339813}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 /// <summary>Enemy‚ÌŠî’êƒNƒ‰ƒX‚Å‚· </summary>
 public class EnemyBase : MonoBehaviour
 {
-    [SerializeField, Header("Stargeã‚Ì—Bˆê‚ÌBoss‚©‚Ç‚¤‚©")]protected bool _isBoss;
-    protected int _nowHp;
+    [SerializeField, Header("Stargeã‚Ì—Bˆê‚ÌBoss‚©‚Ç‚¤‚©")]public bool _isBoss;
+    [SerializeField]protected int _nowHp;
     [SerializeField] int _maxHp;
     PlayerLockon _lockon;
     [SerializeField, Header("ã“_‘®«")] public GoAttribute _attribute;
@@ -15,7 +15,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField, Header("Boss‚ÌHPSlider")] protected GameObject _bossSlider;
     Slider _hpSlider;
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         _nowHp = _maxHp;
         _lockon = FindObjectOfType<PlayerLockon>();
@@ -24,8 +24,14 @@ public class EnemyBase : MonoBehaviour
             _hpSlider = _bossSlider.GetComponent<Slider>();
             _hpSlider.maxValue = _nowHp;
             _hpSlider.minValue = 0;
+            _hpSlider.value = _nowHp;
             _bossSlider.SetActive(false);
         }
+    }
+    void Start()
+    {
+        
+        
     }
     
     // Update is called once per frame
@@ -36,6 +42,7 @@ public class EnemyBase : MonoBehaviour
 
    public void Damage(int damage)
     {
+        Debug.Log("damage");
         _nowHp -= damage;
         if(_nowHp < 0)
         {
@@ -55,7 +62,13 @@ public class EnemyBase : MonoBehaviour
     {
         if (_isBoss)
         {
+            if(_nowHp <= 0)
+            {
+                ChangeSceneManager changeScene = GameObject.Find("SceneManager").GetComponent<ChangeSceneManager>();
+                changeScene.ChangeScene("GameClear");
+            }
             _hpSlider.value = _nowHp;
         }
     }
 }
+

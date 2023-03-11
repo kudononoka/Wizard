@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: ea73601328e98614faf80e9ce5b5612a
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - NakimushiPolca-Free-flopdesign
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 832a71ed929171b458ef142413547c00, type: 3}
+  - {fileID: 12800000, guid: 66ca1e85adb5da54cb60e0c5bd409f0d, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
